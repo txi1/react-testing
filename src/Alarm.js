@@ -71,11 +71,12 @@ class Alarm extends React.Component{
                 minutes: 0,
                 seconds: 0,
                 isButtonDisabled: true,
+                isPaused: true,
                 soundUrl: ""
         }
     }
     
-
+    
     handleChange = (event) =>{
         const{name, value} = event.target
         let s = true
@@ -93,15 +94,21 @@ class Alarm extends React.Component{
     }
     
     handleSubmit(){  
-        
+        if(this.state.isPaused){
             this.timerId = setInterval(()=>{
-              this.tick()
+                this.tick()
             }, 1000);
-
+        }
+            this.setState({
+                isPaused: false
+            })
 }
 
     rewindTime(){
         clearInterval(this.timerId);
+        this.setState({
+            isPaused: true
+        })
     }
 
     tick(){

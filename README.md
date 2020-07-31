@@ -2,7 +2,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## The project
 
-This repo used to follow Tania Rascia's tutorial at (https://www.taniarascia.com/getting-started-with-react/).
+This repo used to follow Tania Rascia's tutorial at https://www.taniarascia.com/getting-started-with-react/.
 
 Now, it follows the official REACT tutorials, and mostly consists of me messing around in react.
 

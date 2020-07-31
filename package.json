@@ -12,7 +12,7 @@
     "react-scripts": "3.4.1",
     "react-scroll": "^1.8.0"
   },
-  "homepage": "https://txi1.github.io/react-basics",
+  "homepage": "https://txi1.github.io/react-testing/",
     "scripts": {
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
