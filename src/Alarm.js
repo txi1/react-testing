@@ -93,7 +93,7 @@ class Alarm extends React.Component{
     }
     
     handleSubmit(){  
-
+        
             this.timerId = setInterval(()=>{
               this.tick()
             }, 1000);
