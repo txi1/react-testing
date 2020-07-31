@@ -6,4 +6,4 @@ This repo used to follow Tania Rascia's tutorial at (https://www.taniarascia.com
 
 Now, it follows the official REACT tutorials, and mostly consists of me messing around in react.
 
-[Live example here.](https://txi1.github.io/react-basics)
+[Live example here.](https://txi1.github.io/react-testing)
