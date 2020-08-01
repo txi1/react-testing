@@ -39,6 +39,18 @@ const AlarmForm = (props) =>{
                     />
             </div>
             <div className="form-row">
+                <label htmlFor="soundUrl">Url for alarm sound</label>
+                <input 
+                    id='soundUrl'
+                    name='soundUrl'
+                    type="text"
+                    onChange={handleChange}
+                    required
+                    placeholder="https://wiki.teamfortress.com/w/images/f/f8/Spy_sf12_goodmagic08.wav"
+                    />
+            </div>
+            <div className="form-row"></div>
+            <div className="form-row">
                 <input type="button" value="Submit" onClick={handleSubmit} disabled={isButtonDisabled}/>
             </div>
         </form>
@@ -55,7 +67,6 @@ const AlarmDisplay = (props) =>{
         </div>
     )
 }
-
 
 
 class Alarm extends React.Component{
@@ -81,16 +92,22 @@ class Alarm extends React.Component{
         const{name, value} = event.target
         let s = true
         this.setState({
-                [name]: Number(value)
+                [name]: value
         }, () =>{
-            if(this.state.hours || this.state.minutes || this.state.seconds){
-                s = false
-            }
             this.setState({
-                isButtonDisabled: s
+                hours: Number(this.state.hours),
+                minutes: Number(this.state.minutes),
+                seconds: Number(this.state.seconds),
+            }, () =>{
+                if(this.state.hours > 0 || this.state.minutes > 0 || this.state.seconds > 0){
+                    s = false
+                }
+                this.setState({
+                    isButtonDisabled: s
+                })
             })
-        })
-        
+            
+            })
     }
     
     handleSubmit(){  
@@ -102,6 +119,9 @@ class Alarm extends React.Component{
             this.setState({
                 isPaused: false
             })
+
+            this.audio = new Audio(this.state.soundUrl)
+            this.audio.load()
 }
 
     rewindTime(){
@@ -109,10 +129,26 @@ class Alarm extends React.Component{
         this.setState({
             isPaused: true
         })
+        this.playAudio()
     }
 
+    playAudio(){
+        const audioPromise = this.audio.play()
+        if(audioPromise !== undefined) {
+            audioPromise.then(() =>{
+
+            })
+            .catch(err => {
+                console.info(err)
+                this.setState({
+                    soundUrl: ""
+                })
+            })
+        }
+    }
+
+
     tick(){
-        console.log(this.state)
         if(this.state.seconds === 0){
             if(this.state.minutes === 0){
                 if(this.state.hours === 0){
@@ -148,6 +184,7 @@ class Alarm extends React.Component{
     render(){
         return(
             <div>
+                {this.state.soundUrl === "" && <div className="error-message"><p>That is an invalid URL.</p></div>}
                 <AlarmDisplay hours={this.state.hours} minutes={this.state.minutes} seconds={this.state.seconds}/>
                 <AlarmForm handleChange={this.handleChange} handleSubmit={this.handleSubmit} isButtonDisabled={this.state.isButtonDisabled}/>
                 <button onClick={this.rewindTime}>STOP</button>
